@@ -46,7 +46,7 @@ public class APFactory implements AbstractAPFactory {
     @Override
     public AppointmentData createAppointmentData( String description, Duration duration, Priority priority ) {
         //TODO Return an instance of your class that implements AppointmentData
-        return null;
+        return new AppointmentDataImp();
     }
 
     @Override
