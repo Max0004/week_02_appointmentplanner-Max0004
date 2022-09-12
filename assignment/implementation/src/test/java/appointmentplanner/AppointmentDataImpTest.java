@@ -1,10 +1,14 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
+ */
 package appointmentplanner;
 
-import java.time.Duration;
-import org.junit.jupiter.api.*;
-import static org.assertj.core.api.Assertions.*;
-
 import appointmentplanner.api.AppointmentData;
+import appointmentplanner.api.Priority;
+import java.time.Duration;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  *
@@ -23,8 +27,9 @@ public class AppointmentDataImpTest {
     @Test
     public void testGetDuration() {
         // TODO review the generated test code and remove the default call to fail.
-        AppointmentData appointment = factory.createAppointmentData("I want an appointment", Duration.ZERO);
-        assertThatThrownBy(() -> appointment.getDuration()).isExactlyInstanceOf(UnsupportedOperationException.class);
+        AppointmentData appointment = factory.createAppointmentData("Appointment", Duration.ofHours(1));
+        assertThat(appointment.getDuration()).isEqualTo(Duration.ofHours(1));
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -33,8 +38,9 @@ public class AppointmentDataImpTest {
     @Test
     public void testGetDescription() {
         // TODO review the generated test code and remove the default call to fail.
-        AppointmentData appointment = factory.createAppointmentData("I want an appointment", Duration.ZERO);
-        assertThatThrownBy(() -> appointment.getDescription()).isExactlyInstanceOf(UnsupportedOperationException.class);
+        AppointmentData appointment = factory.createAppointmentData("Appointment", Duration.ofHours(1));
+        assertThat(appointment.getDescription()).isEqualTo("Appointment");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -43,8 +49,9 @@ public class AppointmentDataImpTest {
     @Test
     public void testGetPriority() {
         // TODO review the generated test code and remove the default call to fail.
-        AppointmentData appointment = factory.createAppointmentData("I want an appointment", Duration.ZERO);
-        assertThatThrownBy(() -> appointment.getPriority()).isExactlyInstanceOf(UnsupportedOperationException.class);
+        AppointmentData appointment = factory.createAppointmentData("Appointment", Duration.ofHours(1), Priority.LOW);
+        assertThat(appointment.getPriority()).isEqualTo(Priority.LOW);
+        //fail("The test case is a prototype.");
     }
     
 }

@@ -14,18 +14,28 @@ import java.time.Duration;
  */
 public class AppointmentDataImp implements AppointmentData{
 
+    private String description;
+    private Duration duration;
+    private Priority priority;
+    
+    AppointmentDataImp(String description, Duration duration, Priority priority) {
+        this.description = description;
+        this.duration = duration;
+        this.priority = priority;
+    }
+
     @Override
     public Duration getDuration() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return duration;
     }
 
     @Override
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return description;
     }
 
     @Override
     public Priority getPriority() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return priority;
     }
 }
