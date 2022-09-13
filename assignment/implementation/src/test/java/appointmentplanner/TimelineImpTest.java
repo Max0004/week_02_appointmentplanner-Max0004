@@ -46,7 +46,7 @@ public class TimelineImpTest {
     public void testStart() {
         // TODO review the generated test code and remove the default call to fail.
         Timeline timeline = new TimelineImp(Instant.MIN, Instant.MAX);
-        assertThatThrownBy(()->timeline.start()).isExactlyInstanceOf(UnsupportedOperationException.class);
+        assertThat(timeline.start()).isEqualTo(Instant.MIN);
         //fail("The test case is a prototype.");
     }
 
@@ -57,7 +57,7 @@ public class TimelineImpTest {
     public void testEnd() {
         // TODO review the generated test code and remove the default call to fail.
         Timeline timeline = new TimelineImp(Instant.MIN, Instant.MAX);
-        assertThatThrownBy(()->timeline.end()).isExactlyInstanceOf(UnsupportedOperationException.class);
+        assertThat(timeline.end()).isEqualTo(Instant.MAX);
         //fail("The test case is a prototype.");
     }
 
