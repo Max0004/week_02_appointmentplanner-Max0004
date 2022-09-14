@@ -51,22 +51,23 @@ public class AppointmentDataImp implements AppointmentData{
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        
+        if(this == obj) {
             return true;
         }
-        if (obj == null) {
+        
+        if(!(obj instanceof AppointmentDataImp)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
+        
+        AppointmentData comparedData = (AppointmentData) obj;
+        
+        if(this.description.equals(comparedData.getDescription()) &&
+                this.duration.equals(comparedData.getDuration()) &&
+                this.priority == comparedData.getPriority()) {
+            return true;
         }
-        final AppointmentDataImp other = (AppointmentDataImp) obj;
-//        if (!Objects.equals(this.description, other.description)) {
-//            return false;
-//        }
-//        if (!Objects.equals(this.duration, other.duration)) {
-//            return false;
-//        }
-        return (this.description == other.description && this.duration == other.duration && this.priority == other.priority);
+        
+        return false;
     }
 }

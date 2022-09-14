@@ -102,22 +102,52 @@ public class AppointmentRequestImpTest {
     }
     
     @Test
-    public void testEquals() {
-        AppointmentData data = factory.createAppointmentData("Appointment please", Duration.ofHours(2));
-        AppointmentData dataNotEqual = factory.createAppointmentData("Appointment please", Duration.ofHours(1), Priority.LOW);
-        AppointmentRequest request = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.LATEST);
-        AppointmentRequest requestDataNotEqual = factory.createAppointmentRequest(dataNotEqual, LocalTime.of(2, 30), TimePreference.LATEST);
-        AppointmentRequest requestLocalTimeNotEqual = factory.createAppointmentRequest(data, LocalTime.of(1, 45), TimePreference.LATEST);
-        AppointmentRequest requestPreferedTimeNotEqual = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.UNSPECIFIED);
-        AppointmentRequest requestNull = null;
+    public void equalsFalseIfDataDifferent() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
+        AppointmentData dataNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
         
-        SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(request.equals(request)).isTrue();
-            softly.assertThat(request.equals(data)).isFalse();
-            softly.assertThat(request.equals(requestDataNotEqual)).isFalse();
-            softly.assertThat(request.equals(requestLocalTimeNotEqual)).isFalse();
-            softly.assertThat(request.equals(requestPreferedTimeNotEqual)).isFalse();
-            softly.assertThat(request.equals(requestNull)).isFalse();
-        });
+        AppointmentRequest request = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.EARLIEST);
+        AppointmentRequest requestNotEqual = factory.createAppointmentRequest(dataNotEqual, LocalTime.of(2, 30), TimePreference.EARLIEST);
+        
+        assertThat(request.equals(requestNotEqual)).isFalse();
+    }
+    
+    @Test
+    public void equalsFalseIfDurationDifferent() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
+        
+        AppointmentRequest request = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.EARLIEST);
+        AppointmentRequest requestNotEqual = factory.createAppointmentRequest(data, LocalTime.of(3, 30), TimePreference.EARLIEST);
+        
+        assertThat(request.equals(requestNotEqual)).isFalse();
+    }
+    
+    @Test
+    public void equalsFalseIfPreferedTimeDifferent() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
+        
+        AppointmentRequest request = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.EARLIEST);
+        AppointmentRequest requestNotEqual = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.LATEST);
+        
+        assertThat(request.equals(requestNotEqual)).isFalse();
+    }
+    
+    @Test
+    public void equalsTrueIfDataSame() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
+        
+        AppointmentRequest request = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.EARLIEST);
+        AppointmentRequest requestEqual = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.EARLIEST);
+        
+        assertThat(request.equals(requestEqual)).isTrue();
+    }
+    
+    @Test
+    public void equalsTrueIfObjectSame() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
+        
+        AppointmentRequest request = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.EARLIEST);
+        
+        assertThat(request.equals(request)).isTrue();
     }
 }

@@ -73,21 +73,41 @@ public class AppointmentDataImpTest {
     }
     
     @Test
-    public void testEquals() {
-        AppointmentData appointment = factory.createAppointmentData("Appointment", Duration.ofHours(2),Priority.MEDIUM);
-        AppointmentData appointmentDescNotEqual = factory.createAppointmentData("Hi", Duration.ofHours(2),Priority.MEDIUM);
-        AppointmentData appointmentDurationNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3),Priority.MEDIUM);
-        AppointmentData appointmentPriorityNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
-        AppointmentData appointmentNull = null;
-        String appointmentString = "I want an appointmentplease";
+    public void equalsFalseIfDescriptionDifferent() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
+        AppointmentData dataNotEqual = factory.createAppointmentData("Appontment", Duration.ofHours(3), Priority.LOW);
         
-        SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(appointment.equals(appointment)).isTrue();
-            softly.assertThat(appointment.equals(appointmentNull)).isFalse();
-            softly.assertThat(appointment.equals(appointmentString)).isFalse();
-            softly.assertThat(appointment.equals(appointmentDescNotEqual)).isFalse();
-            softly.assertThat(appointment.equals(appointmentDurationNotEqual)).isFalse();
-            softly.assertThat(appointment.equals(appointmentPriorityNotEqual)).isFalse();
-        });
+        assertThat(data.equals(dataNotEqual)).isFalse();
+    }
+    
+    @Test
+    public void equalsFalseIfDurationDifferent() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
+        AppointmentData dataNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(5), Priority.LOW);
+        
+        assertThat(data.equals(dataNotEqual)).isFalse();
+    }
+    
+    @Test
+    public void equalsFalseIfPriorityDifferent() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
+        AppointmentData dataNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.HIGH);
+        
+        assertThat(data.equals(dataNotEqual)).isFalse();
+    }
+    
+    @Test
+    public void equalsTrueIfDataSame() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
+        AppointmentData dataEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
+        
+        assertThat(data.equals(dataEqual)).isTrue();
+    }
+    
+    @Test
+    public void equalsTrueIfObjectSame() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
+        
+        assertThat(data.equals(data)).isTrue();
     }
 }

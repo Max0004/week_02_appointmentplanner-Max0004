@@ -63,22 +63,23 @@ public class AppointmentRequestImp implements AppointmentRequest{
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        
+        if(this == obj) {
             return true;
         }
-        if (obj == null) {
+        
+        if(!(obj instanceof AppointmentRequestImp)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
+        
+        AppointmentRequest comparedRequest = (AppointmentRequest) obj;
+        
+        if(this.appData == comparedRequest.getAppointmentData() &&
+                this.fallBack.equals(comparedRequest.getTimePreference()) &&
+                this.prefStart.equals(comparedRequest.getStartTime())) {
+            return true;
         }
-        final AppointmentRequestImp other = (AppointmentRequestImp) obj;
-//        if (!Objects.equals(this.appData, other.appData)) {
-//            return false;
-//        }
-//        if (!Objects.equals(this.prefStart, other.prefStart)) {
-//            return false;
-//        }
-        return (this.appData == other.appData && this.prefStart == other.prefStart && this.fallBack == other.fallBack);
+        
+        return false;
     }
 }
