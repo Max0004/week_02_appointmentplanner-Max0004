@@ -112,6 +112,7 @@ public class AppointmentRequestImpTest {
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(request.equals(request)).isTrue();
             softly.assertThat(request.equals(requestEqual)).isTrue();
+            softly.assertThat(request.equals(data)).isFalse();
             softly.assertThat(request.equals(requestNotEqual)).isFalse();
             softly.assertThat(request.equals(requestNull)).isFalse();
         });

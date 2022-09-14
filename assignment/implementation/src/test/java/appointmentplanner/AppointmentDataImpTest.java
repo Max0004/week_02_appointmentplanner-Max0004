@@ -78,10 +78,12 @@ public class AppointmentDataImpTest {
         AppointmentData appointmentDescNotEqual = factory.createAppointmentData("Hi", Duration.ofHours(2));
         AppointmentData appointmentDurationNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3));
         AppointmentData appointmentNull = null;
+        String appointmentString = "I want an appointmentplease";
         
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(appointment.equals(appointment)).isTrue();
             softly.assertThat(appointment.equals(appointmentNull)).isFalse();
+            softly.assertThat(appointment.equals(appointmentString)).isFalse();
             softly.assertThat(appointment.equals(appointmentDescNotEqual)).isFalse();
             softly.assertThat(appointment.equals(appointmentDurationNotEqual)).isFalse();
         });
