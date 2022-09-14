@@ -61,12 +61,12 @@ public class AppointmentDataImp implements AppointmentData{
             return false;
         }
         final AppointmentDataImp other = (AppointmentDataImp) obj;
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.duration, other.duration)) {
-            return false;
-        }
-        return this.priority == other.priority;
+//        if (!Objects.equals(this.description, other.description)) {
+//            return false;
+//        }
+//        if (!Objects.equals(this.duration, other.duration)) {
+//            return false;
+//        }
+        return (this.description == other.description && this.duration == other.duration && this.priority == other.priority);
     }
 }

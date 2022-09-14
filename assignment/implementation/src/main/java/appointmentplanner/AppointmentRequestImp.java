@@ -73,12 +73,12 @@ public class AppointmentRequestImp implements AppointmentRequest{
             return false;
         }
         final AppointmentRequestImp other = (AppointmentRequestImp) obj;
-        if (!Objects.equals(this.appData, other.appData)) {
-            return false;
-        }
-        if (!Objects.equals(this.prefStart, other.prefStart)) {
-            return false;
-        }
-        return this.fallBack == other.fallBack;
+//        if (!Objects.equals(this.appData, other.appData)) {
+//            return false;
+//        }
+//        if (!Objects.equals(this.prefStart, other.prefStart)) {
+//            return false;
+//        }
+        return (this.appData == other.appData && this.prefStart == other.prefStart && this.fallBack == other.fallBack);
     }
 }
