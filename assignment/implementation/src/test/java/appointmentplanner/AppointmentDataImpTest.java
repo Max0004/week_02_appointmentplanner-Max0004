@@ -73,6 +73,14 @@ public class AppointmentDataImpTest {
     }
     
     @Test
+    public void equalsFalseIfObjectDifferent() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
+        String dataNotEqual = "Moin";
+        
+        assertThat(data.equals(dataNotEqual)).isFalse();
+    }
+    
+    @Test
     public void equalsFalseIfDescriptionDifferent() {
         AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
         AppointmentData dataNotEqual = factory.createAppointmentData("Appontment", Duration.ofHours(3), Priority.LOW);

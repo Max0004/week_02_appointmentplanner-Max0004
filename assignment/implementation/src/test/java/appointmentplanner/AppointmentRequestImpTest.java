@@ -102,6 +102,15 @@ public class AppointmentRequestImpTest {
     }
     
     @Test
+    public void equalsFalseIfObjectDifferent() {
+        AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
+        
+        AppointmentRequest request = factory.createAppointmentRequest(data, LocalTime.of(2, 30), TimePreference.EARLIEST);
+        
+        assertThat(request.equals(data)).isFalse();
+    }
+    
+    @Test
     public void equalsFalseIfDataDifferent() {
         AppointmentData data = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
         AppointmentData dataNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3), Priority.LOW);
