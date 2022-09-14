@@ -74,9 +74,10 @@ public class AppointmentDataImpTest {
     
     @Test
     public void testEquals() {
-        AppointmentData appointment = factory.createAppointmentData("Appointment", Duration.ofHours(2));
-        AppointmentData appointmentDescNotEqual = factory.createAppointmentData("Hi", Duration.ofHours(2));
-        AppointmentData appointmentDurationNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3));
+        AppointmentData appointment = factory.createAppointmentData("Appointment", Duration.ofHours(2),Priority.MEDIUM);
+        AppointmentData appointmentDescNotEqual = factory.createAppointmentData("Hi", Duration.ofHours(2),Priority.MEDIUM);
+        AppointmentData appointmentDurationNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3),Priority.MEDIUM);
+        AppointmentData appointmentPriorityNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(2), Priority.LOW);
         AppointmentData appointmentNull = null;
         String appointmentString = "I want an appointmentplease";
         
@@ -86,6 +87,7 @@ public class AppointmentDataImpTest {
             softly.assertThat(appointment.equals(appointmentString)).isFalse();
             softly.assertThat(appointment.equals(appointmentDescNotEqual)).isFalse();
             softly.assertThat(appointment.equals(appointmentDurationNotEqual)).isFalse();
+            softly.assertThat(appointment.equals(appointmentPriorityNotEqual)).isFalse();
         });
     }
 }
