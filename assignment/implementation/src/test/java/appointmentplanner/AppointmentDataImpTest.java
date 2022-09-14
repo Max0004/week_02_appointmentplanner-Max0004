@@ -9,6 +9,7 @@ import appointmentplanner.api.Priority;
 import java.time.Duration;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
+import org.assertj.core.api.SoftAssertions;
 
 /**
  *
@@ -54,4 +55,35 @@ public class AppointmentDataImpTest {
         //fail("The test case is a prototype.");
     }
     
+    @Test
+    public void testHashCode() {
+        AppointmentData appointment = factory.createAppointmentData("Appointment", Duration.ofHours(1));
+        AppointmentData appointmentEquals = appointment;
+        AppointmentData appointmentEqualsAgain = factory.createAppointmentData("Appointment", Duration.ofHours(1));
+        AppointmentData appointmentNotEquals = factory.createAppointmentData("Appointment", Duration.ofHours(2));
+        
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(appointment.hashCode()).isEqualTo(appointmentEquals.hashCode());
+            softly.assertThat(appointment.hashCode()).isEqualTo(appointmentEqualsAgain.hashCode());
+            softly.assertThat(appointmentEquals.hashCode()).isEqualTo(appointmentEqualsAgain.hashCode());
+            softly.assertThat(appointment.hashCode()).isNotEqualTo(appointmentNotEquals.hashCode());
+            softly.assertThat(appointmentEquals.hashCode()).isNotEqualTo(appointmentNotEquals.hashCode());
+            softly.assertThat(appointmentEqualsAgain.hashCode()).isNotEqualTo(appointmentNotEquals.hashCode());
+        });
+    }
+    
+    @Test
+    public void testEquals() {
+        AppointmentData appointment = factory.createAppointmentData("Appointment", Duration.ofHours(2));
+        AppointmentData appointmentDescNotEqual = factory.createAppointmentData("Hi", Duration.ofHours(2));
+        AppointmentData appointmentDurationNotEqual = factory.createAppointmentData("Appointment", Duration.ofHours(3));
+        AppointmentData appointmentNull = null;
+        
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(appointment.equals(appointment)).isTrue();
+            softly.assertThat(appointment.equals(appointmentNull)).isFalse();
+            softly.assertThat(appointment.equals(appointmentDescNotEqual)).isFalse();
+            softly.assertThat(appointment.equals(appointmentDurationNotEqual)).isFalse();
+        });
+    }
 }
