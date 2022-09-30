@@ -26,33 +26,33 @@ import java.time.ZoneId;
  * Richard van den Ham {@code r.vandenham@fontys.nl} Pieter van den Hombergh
  * {@code p.vandenhombergh@fontys.nl}
  */
-public class APFactory implements AbstractAPFactory {
+public class MaxAPFactory implements AbstractAPFactory {
 
-    public APFactory() {
+    public MaxAPFactory() {
     }
     
     @Override
     public LocalDayPlan createLocalDayPlan( ZoneId zone, LocalDate date, Timeline timeline ) {
         //TODO Return an instance of your class that implements LocalDayPlan
-        return new LocalDayPlanImp(zone,date,timeline);
+        return new MaxLocalDayPlan(zone,date,timeline);
     }
 
     @Override
     public LocalDayPlan createLocalDayPlan( LocalDay day, Instant start, Instant end ) {
         //TODO Return an instance of your class that implements LocalDayPlan
-        return new LocalDayPlanImp(day,start,end);
+        return new MaxLocalDayPlan(day,start,end);
     }
 
     @Override
     public AppointmentData createAppointmentData( String description, Duration duration, Priority priority ) {
         //TODO Return an instance of your class that implements AppointmentData
-        return new AppointmentDataImp(description,duration,priority);
+        return new MaxAppointmentData(description,duration,priority);
     }
 
     @Override
     public AppointmentRequest createAppointmentRequest( AppointmentData appData, LocalTime prefStart, TimePreference fallBack ) {
         //TODO Return an instance of your class that implements AppointmentRequest
-        return new AppointmentRequestImp(appData,prefStart,fallBack);
+        return new MaxAppointmentRequest(appData,prefStart,fallBack);
     }
 
     @Override

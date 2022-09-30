@@ -14,31 +14,36 @@ import appointmentplanner.api.Timeline;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Spliterator;
+import static java.util.Spliterator.ORDERED;
+import java.util.Spliterators;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  *
- * @author max
+ * @author Rolf
  */
-public class TimelineImp implements Timeline{
+public class MaxTimeline implements Timeline, Iterable<TimeSlot> {
 
-    private Instant start;
-    private Instant end;
-    private List<Appointment> appointments;
+    private final Instant start;
+    private final Instant end;
+    private final AllocationNode head;
 
-    public TimelineImp(Instant start, Instant end) {
+    MaxTimeline(Instant start, Instant end) {
         this.start = start;
         this.end = end;
-        appointments = new ArrayList<>();
+
+        head = new AllocationNode(new FreeTimeSlot(this.start, this.end), null, null);
     }
-    
+
     @Override
     public int getNrOfAppointments() {
-        return appointments.size();
+        return (int) appointmentStream().count();
     }
 
     @Override
@@ -83,17 +88,21 @@ public class TimelineImp implements Timeline{
 
     @Override
     public Stream<Appointment> appointmentStream() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return stream()
+                .filter(e -> e instanceof MaxAppointment).map(e -> (Appointment) e);
     }
 
     @Override
     public boolean contains(Appointment appointment) {
-        return appointments.contains(appointment);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public List<TimeSlot> getGapsFitting(Duration duration) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return stream()
+                .filter(e -> (e instanceof FreeTimeSlot) && (e.duration().toMinutes() >= duration.toMinutes()))
+                .map(e -> e)
+                .toList();
     }
 
     @Override
@@ -120,5 +129,35 @@ public class TimelineImp implements Timeline{
     public List<TimeSlot> getMatchingFreeSlotsOfDuration(Duration minLength, List<Timeline> other) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public Iterator<TimeSlot> iterator() {
+        Iterator<TimeSlot> iterator = new Iterator<TimeSlot>() {
+
+            private AllocationNode currentNode = head;
+
+            @Override
+            public boolean hasNext() {
+                return currentNode != null;
+            }
+
+            @Override
+            public TimeSlot next() {
+                TimeSlot returnValue = currentNode.getTimeSlot();
+                currentNode = currentNode.getNext();
+                return returnValue;
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+        return iterator;
+    }
+
+    Stream<TimeSlot> stream() {
+        Spliterator<TimeSlot> spliterator = Spliterators.spliteratorUnknownSize(iterator(), ORDERED);
+        return StreamSupport.stream(spliterator, false);
+    }
 }
