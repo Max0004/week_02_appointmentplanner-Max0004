@@ -13,8 +13,8 @@ import java.time.Instant;
  */
 public class FreeTimeSlot implements TimeSlot {
 
-    private final Instant start;
-    private final Instant end;
+    private Instant start;
+    private Instant end;
 
     public FreeTimeSlot(Instant start, Instant end) {
         this.start = start;
@@ -29,5 +29,13 @@ public class FreeTimeSlot implements TimeSlot {
     @Override
     public Instant getEnd() {
         return end;
+    }
+
+    public void setStart(Instant start) {
+        this.start = start;
+    }
+
+    public void setEnd(Instant end) {
+        this.end = end;
     }
 }
